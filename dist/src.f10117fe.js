@@ -137,12 +137,25 @@ exports.User = void 0;
 var User = /** @class */function () {
   function User(data) {
     this.data = data;
+    this.events = {};
   }
   User.prototype.get = function (propName) {
     return this.data[propName];
   };
   User.prototype.set = function (update) {
     this.data = __assign(__assign({}, this.data), update);
+  };
+  User.prototype.on = function (eventName, callback) {
+    var handlers = this.events[eventName] || [];
+    handlers.push(callback);
+    this.events[eventName] = handlers;
+  };
+  User.prototype.trigger = function (eventName) {
+    var handlers = this.events[eventName];
+    if (!handlers || handlers.length === 0) return;
+    handlers.forEach(function (callback) {
+      return callback();
+    });
   };
   return User;
 }();
@@ -155,15 +168,20 @@ Object.defineProperty(exports, "__esModule", {
 });
 var Users_1 = require("./models/Users");
 var user = new Users_1.User({
-  name: 'eorigj',
-  age: 12
+  name: 'My Name',
+  age: 22
 });
-console.log(user.get('name'));
-user.set({
-  age: 24
+user.on('change', function () {
+  console.log('Change 1');
 });
-console.log(user.get('age'));
-},{"./models/Users":"src/models/Users.ts"}],"../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+user.on('change', function () {
+  console.log('Change 2');
+});
+user.on('save', function () {
+  console.log('save was triggered');
+});
+user.trigger('save');
+},{"./models/Users":"src/models/Users.ts"}],"../../.nvm/versions/node/v18.14.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -188,7 +206,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43437" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41995" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
@@ -332,5 +350,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.ts"], null)
+},{}]},{},["../../.nvm/versions/node/v18.14.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.ts"], null)
 //# sourceMappingURL=/src.f10117fe.js.map
