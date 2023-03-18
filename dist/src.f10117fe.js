@@ -5481,7 +5481,17 @@ var user = new Users_1.User({
   name: 'Donnie',
   age: 45
 });
-user.save();
+user.on('change', function () {
+  console.log('Change #1');
+});
+user.on('change', function () {
+  console.log('Change #2');
+});
+user.on('save', function () {
+  console.log('Save was triggered');
+});
+user.trigger('change');
+user.trigger('save');
 },{"./models/Users":"src/models/Users.ts"}],"../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -5507,7 +5517,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37911" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38063" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
