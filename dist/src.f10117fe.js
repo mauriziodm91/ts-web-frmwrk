@@ -904,7 +904,7 @@ exports.default = void 0;
 // eslint-disable-next-line strict
 var _default = null;
 exports.default = _default;
-},{}],"../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/node_modules/base64-js/index.js":[function(require,module,exports) {
+},{}],"../../.nvm/versions/node/v18.15.0/lib/node_modules/parcel-bundler/node_modules/base64-js/index.js":[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -1056,7 +1056,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],"../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/node_modules/ieee754/index.js":[function(require,module,exports) {
+},{}],"../../.nvm/versions/node/v18.15.0/lib/node_modules/parcel-bundler/node_modules/ieee754/index.js":[function(require,module,exports) {
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
@@ -1143,14 +1143,14 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],"../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/node_modules/isarray/index.js":[function(require,module,exports) {
+},{}],"../../.nvm/versions/node/v18.15.0/lib/node_modules/parcel-bundler/node_modules/isarray/index.js":[function(require,module,exports) {
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],"../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/node_modules/buffer/index.js":[function(require,module,exports) {
+},{}],"../../.nvm/versions/node/v18.15.0/lib/node_modules/parcel-bundler/node_modules/buffer/index.js":[function(require,module,exports) {
 
 var global = arguments[3];
 /*!
@@ -2943,7 +2943,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":"../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/node_modules/base64-js/index.js","ieee754":"../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/node_modules/ieee754/index.js","isarray":"../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/node_modules/isarray/index.js","buffer":"../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/node_modules/buffer/index.js"}],"node_modules/axios/lib/helpers/toFormData.js":[function(require,module,exports) {
+},{"base64-js":"../../.nvm/versions/node/v18.15.0/lib/node_modules/parcel-bundler/node_modules/base64-js/index.js","ieee754":"../../.nvm/versions/node/v18.15.0/lib/node_modules/parcel-bundler/node_modules/ieee754/index.js","isarray":"../../.nvm/versions/node/v18.15.0/lib/node_modules/parcel-bundler/node_modules/isarray/index.js","buffer":"../../.nvm/versions/node/v18.15.0/lib/node_modules/parcel-bundler/node_modules/buffer/index.js"}],"node_modules/axios/lib/helpers/toFormData.js":[function(require,module,exports) {
 var Buffer = require("buffer").Buffer;
 'use strict';
 
@@ -3138,7 +3138,7 @@ function toFormData(obj, formData, options) {
 }
 var _default = toFormData;
 exports.default = _default;
-},{"../utils.js":"node_modules/axios/lib/utils.js","../core/AxiosError.js":"node_modules/axios/lib/core/AxiosError.js","../platform/node/classes/FormData.js":"node_modules/axios/lib/helpers/null.js","buffer":"../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/node_modules/buffer/index.js"}],"node_modules/axios/lib/helpers/AxiosURLSearchParams.js":[function(require,module,exports) {
+},{"../utils.js":"node_modules/axios/lib/utils.js","../core/AxiosError.js":"node_modules/axios/lib/core/AxiosError.js","../platform/node/classes/FormData.js":"node_modules/axios/lib/helpers/null.js","buffer":"../../.nvm/versions/node/v18.15.0/lib/node_modules/parcel-bundler/node_modules/buffer/index.js"}],"node_modules/axios/lib/helpers/AxiosURLSearchParams.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -5407,7 +5407,33 @@ exports.isCancel = isCancel;
 exports.CanceledError = CanceledError;
 exports.AxiosError = AxiosError;
 exports.Axios = Axios;
-},{"./lib/axios.js":"node_modules/axios/lib/axios.js"}],"src/models/Users.ts":[function(require,module,exports) {
+},{"./lib/axios.js":"node_modules/axios/lib/axios.js"}],"src/models/Eventing.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Eventing = void 0;
+var Eventing = /** @class */function () {
+  function Eventing() {
+    this.events = {};
+  }
+  Eventing.prototype.on = function (eventName, callback) {
+    var handlers = this.events[eventName] || [];
+    handlers.push(callback);
+    this.events[eventName] = handlers;
+  };
+  Eventing.prototype.trigger = function (eventName) {
+    var handlers = this.events[eventName];
+    if (!handlers || handlers.length === 0) return;
+    handlers.forEach(function (callback) {
+      return callback();
+    });
+  };
+  return Eventing;
+}();
+exports.Eventing = Eventing;
+},{}],"src/models/Users.ts":[function(require,module,exports) {
 "use strict";
 
 var __assign = this && this.__assign || function () {
@@ -5430,34 +5456,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.User = void 0;
 var axios_1 = __importDefault(require("axios"));
+var Eventing_1 = require("./Eventing");
 var User = /** @class */function () {
   function User(data) {
     this.data = data;
-    this.events = {};
+    this.events = new Eventing_1.Eventing();
   }
   User.prototype.get = function (propName) {
     return this.data[propName];
   };
   User.prototype.set = function (update) {
     this.data = __assign(__assign({}, this.data), update);
-  };
-  User.prototype.on = function (eventName, callback) {
-    var handlers = this.events[eventName] || [];
-    handlers.push(callback);
-    this.events[eventName] = handlers;
-  };
-  User.prototype.trigger = function (eventName) {
-    var handlers = this.events[eventName];
-    if (!handlers || handlers.length === 0) return;
-    handlers.forEach(function (callback) {
-      return callback();
-    });
-  };
-  User.prototype.fetch = function () {
-    var _this = this;
-    axios_1.default.get("http://localhost:3000/users/".concat(this.get('id'))).then(function (response) {
-      _this.set(response.data);
-    });
   };
   User.prototype.save = function () {
     var id = this.get('id');
@@ -5470,7 +5479,7 @@ var User = /** @class */function () {
   return User;
 }();
 exports.User = User;
-},{"axios":"node_modules/axios/index.js"}],"src/index.ts":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","./Eventing":"src/models/Eventing.ts"}],"src/index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5478,21 +5487,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 var Users_1 = require("./models/Users");
 var user = new Users_1.User({
-  name: 'Donnie',
-  age: 45
+  name: 'Charles',
+  age: 50
 });
-user.on('change', function () {
-  console.log('Change #1');
+user.events.on('change', function () {
+  console.log('change!');
 });
-user.on('change', function () {
-  console.log('Change #2');
-});
-user.on('save', function () {
-  console.log('Save was triggered');
-});
-user.trigger('change');
-user.trigger('save');
-},{"./models/Users":"src/models/Users.ts"}],"../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+user.events.trigger('change');
+},{"./models/Users":"src/models/Users.ts"}],"../../.nvm/versions/node/v18.15.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -5517,7 +5519,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38063" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37525" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
@@ -5661,5 +5663,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../.nvm/versions/node/v16.17.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.ts"], null)
+},{}]},{},["../../.nvm/versions/node/v18.15.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.ts"], null)
 //# sourceMappingURL=/src.f10117fe.js.map

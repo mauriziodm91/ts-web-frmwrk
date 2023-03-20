@@ -1,3 +1,3 @@
 import { User } from './models/Users'
 
-const user = new User({ name: 'Donnie', age: 45 })
+const user = new User({ name: 'Charles', age: 50 })
